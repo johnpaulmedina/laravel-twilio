@@ -1,6 +1,6 @@
 <?php
 
-namespace Aloha\Twilio\Facades;
+namespace Jp\Twilio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
