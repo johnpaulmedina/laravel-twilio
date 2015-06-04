@@ -8,16 +8,16 @@ Laravel 5 Twillio API Integration
 
 
 ## Installation
-Begin by installing this package through Composer. Edit your project's `composer.json` file to require `olsgreen/twilio` and the repository (only until we publish on packagist).
+Begin by installing this package through Composer. Edit your project's `composer.json` file to require `johnpaulmedina/twilio` and the repository (only until we publish on packagist).
 
     "require": {
         ...
-        "olsgreen/twilio": "2.0.*",
+        "johnpaulmedina/twilio": "2.0.*",
     },
     "repositories": [
         {
             "type": "vcs",
-            "url":  "git@github.com:olsgreen/laravel5-twilio.git"
+            "url":  "git@github.com:johnpaulmedina/laravel-twilio.git"
         }
     ]
 
@@ -27,11 +27,11 @@ Next, update Composer from the Terminal:
 
 Once composer is finished, you need to add the service provider. Open `config/app.php`, and add a new item to the providers array.
 
-    'Aloha\Twilio\TwilioServiceProvider',
+    'Jp\Twilio\TwilioServiceProvider',
 
 Then, add a Facade for more convenient usage. In `config/app.php` add the following line to the `aliases` array:
 
-    'Twilio' => 'Aloha\Twilio\Facades\Twilio',
+    'Twilio' => 'Jp\Twilio\Facades\Twilio',
 
 Add the configuration to `config/services.php`
 
