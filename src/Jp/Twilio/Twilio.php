@@ -10,6 +10,17 @@ class Twilio {
         $this->config = $config;
     }
 
+    public function Capability($userId) {
+        $capability = new \Services_Twilio_Capability(
+            $this->config['sid'], 
+            $this->config['token']
+        );
+        $capability->allowClientIncoming($userId);
+        $capability->allowClientOutgoing('AP8c670af01a3f7b08a49ec96d63bd671f');
+
+        return $capability->generateToken(3600*24);
+    }
+
     public function AvailablePhoneNumbers($type="Local",$SearchParams=array()) {
         $twilio = $this->getTwilio();
         $numbers = $twilio->account->available_phone_numbers->getList('US', $type, $SearchParams);
