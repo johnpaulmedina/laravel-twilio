@@ -15,6 +15,7 @@ class Twilio {
             $this->config['sid'], 
             $this->config['token']
         );
+        $userId = str_replace("-", "", $userId);
         $capability->allowClientIncoming($userId);
         $capability->allowClientOutgoing('AP8c670af01a3f7b08a49ec96d63bd671f');
 
