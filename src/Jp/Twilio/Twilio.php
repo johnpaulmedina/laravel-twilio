@@ -10,6 +10,22 @@ class Twilio {
         $this->config = $config;
     }
 
+    public function GetCall($callsid)
+    {
+        $twilio = $this->getTwilio();
+        // Create Call via Twilio SDK
+        return $twilio->account->calls->get($callsid);
+    }
+
+    public function UpdateCall($call,$address,$method="POST")
+    {
+        $call->update(array(
+            "Url" => $address,
+            "Method" => $method
+        ));
+        return $call->to;
+    }
+
     public function Capability($userId) {
         $capability = new \Services_Twilio_Capability(
             $this->config['sid'], 
