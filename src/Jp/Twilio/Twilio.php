@@ -88,7 +88,7 @@ class Twilio {
 
     }
 
-    private function getTwilio()
+    public function getTwilio()
     {
         if (array_key_exists('ssl_verify', $this->config) 
             && false === $this->config['ssl_verify']) {
