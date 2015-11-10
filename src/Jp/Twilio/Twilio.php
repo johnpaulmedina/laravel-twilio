@@ -17,12 +17,9 @@ class Twilio {
         return $twilio->account->calls->get($callsid);
     }
 
-    public function UpdateCall($call,$address,$method="POST")
+    public function UpdateCall($call,$args)
     {
-        $call->update(array(
-            "Url" => $address,
-            "Method" => $method
-        ));
+        $call->update($args);
         return $call->to;
     }
 
@@ -33,7 +30,7 @@ class Twilio {
         );
         $userId = str_replace("-", "", $userId);
         $capability->allowClientIncoming($userId);
-        $capability->allowClientOutgoing('AP8c670af01a3f7b08a49ec96d63bd671f');
+        $capability->allowClientOutgoing($this->config['app_sid']);
 
         return $capability->generateToken(3600*24);
     }
