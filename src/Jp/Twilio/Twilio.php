@@ -35,7 +35,7 @@ class Twilio {
 
     public function Capability($userId,$companyId = NULL) {
         
-        if($companyId) {
+        if($companyId && array_key_exists($companyId,$this->config)) {
             $capability = new \Services_Twilio_Capability(
                 $this->config[$companyId]['sid'], 
                 $this->config[$companyId]['token']
@@ -50,7 +50,7 @@ class Twilio {
         $userId = str_replace("-", "", $userId);
         $capability->allowClientIncoming($userId);
 
-        if($companyId) {
+        if($companyId && array_key_exists($companyId,$this->config)) {
             $capability->allowClientOutgoing($this->config[$companyId]['app_sid']);
         } else {
             $capability->allowClientOutgoing($this->config['app_sid']);
