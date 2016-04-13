@@ -23,14 +23,38 @@ class Twilio {
         return $call->to;
     }
 
-    public function Capability($userId) {
-        $capability = new \Services_Twilio_Capability(
-            $this->config['sid'], 
-            $this->config['token']
-        );
+    // Lead Trust
+    // Company ID:   2fd57a80-f93a-11e4-905b-23bd4943c732
+    // Account SID:  ACb5698fa310df3dd9c06aee561e56fca2
+    // Auth Token:   95839b52989b9edc2dfbf80ddde6ac7f
+
+    // LT TV & Internet
+    // Company ID:   2184abb0-00d5-11e6-bd72-0d276f541785
+    // Account SID:  AC11c40f4629bd592a9e51b7dcad11d6d8
+    // Auth Token:   a29eb338f88ef1c90ce011d0c223f095
+
+    public function Capability($userId,$companyId = NULL) {
+        
+        if($companyId) {
+            $capability = new \Services_Twilio_Capability(
+                $this->config[$companyId]['sid'], 
+                $this->config[$companyId]['token']
+            );
+        } else {
+            $capability = new \Services_Twilio_Capability(
+                $this->config['sid'], 
+                $this->config['token']
+            );
+        }
+
         $userId = str_replace("-", "", $userId);
         $capability->allowClientIncoming($userId);
-        $capability->allowClientOutgoing($this->config['app_sid']);
+
+        if($companyId) {
+            $capability->allowClientOutgoing($this->config[$companyId]['app_sid']);
+        } else {
+            $capability->allowClientOutgoing($this->config['app_sid']);
+        }
 
         return $capability->generateToken(3600*24);
     }
