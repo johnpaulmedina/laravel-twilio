@@ -10,9 +10,13 @@ class Twilio {
         $this->config = $config;
     }
 
-    public function GetCall($callsid)
+    public function GetCall($callsid,$companyId=null)
     {
-        $twilio = $this->getTwilio();
+        if($companyId && array_key_exists($companyId,$this->config)) {
+            $twilio = $this->getTwilio($companyId);
+        } else {
+            $twilio = $this->getTwilio();
+        }
         // Create Call via Twilio SDK
         return $twilio->account->calls->get($callsid);
     }
@@ -85,8 +89,8 @@ class Twilio {
         );
     }
 
-    public function call($to, $url, $options=array(), $from=null) {
-        $twilio = $this->getTwilio();
+    public function call($companyId, $to, $url, $options=array(), $from=null) {
+        $twilio = $this->getTwilio($companyId);
         // Create Call via Twilio SDK
         return $twilio->account->calls->create(
             is_null($from) ? $this->config['from'] : $from,
@@ -109,10 +113,21 @@ class Twilio {
 
     }
 
-    public function getTwilio()
+    public function getTwilio($companyId = NULL)
     {
+
+        if($companyId && array_key_exists($companyId, $this->config)) {
+            $ssl_verify = $this->config[$companyId]['ssl_verify'];
+            $sid = $this->config[$companyId]['sid'];
+            $token = $this->config[$companyId]['token'];
+        } else {
+            $ssl_verify = $this->config['ssl_verify'];
+            $sid = $this->config['sid'];
+            $token = $this->config['token'];
+        }
+        
         if (array_key_exists('ssl_verify', $this->config) 
-            && false === $this->config['ssl_verify']) {
+            && false === $ssl_verify) {
 
             $http = new \Services_Twilio_TinyHttp(
                 'https://api.twilio.com',
@@ -125,14 +140,14 @@ class Twilio {
             );
 
             return new \Services_Twilio(
-                $this->config['sid'], 
-                $this->config['token'], 
+                $sid, 
+                $token, 
                 null, 
                 $http
             );
         }
 
-        return new \Services_Twilio($this->config['sid'], $this->config['token']);
+        return new \Services_Twilio($sid, $token);
     }
 
 }
