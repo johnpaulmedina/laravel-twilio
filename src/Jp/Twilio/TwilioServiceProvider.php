@@ -21,9 +21,9 @@ class TwilioServiceProvider extends ServiceProvider {
 
         // Register manager for usage with the Facade.
         $this->app->singleton('twilio', function () {
-            $config = \Config::get('twilio');
+            $config = \Config::get('services.twilio');
             if (!array($config)) {
-                throw new \Exception('Twilio: Invalid configuration.');
+                throw new \Exception('Twilio: Invalid configuration loaded on services.php.');
             }
             return new Twilio($config);
         });
