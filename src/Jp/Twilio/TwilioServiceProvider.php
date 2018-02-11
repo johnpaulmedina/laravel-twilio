@@ -18,29 +18,39 @@ class TwilioServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->app['twilio'] = $this->app->share(function($app)
-        {
-            $config = \Config::get('services.twilio');
+
+        // Register manager for usage with the Facade.
+        $this->app->singleton('twilio', function () {
+            $config = \Config::get('twilio');
             if (!array($config)) {
                 throw new \Exception('Twilio: Invalid configuration.');
             }
             return new Twilio($config);
         });
 
-        // Register Twilio Test SMS Command
-        $this->app['twilio.sms'] = $this->app->share(function($app) {
-            return new Commands\TwilioSmsCommand();
-        });
+        // $this->app['twilio'] = $this->app->share(function($app)
+        // {
+        //     $config = \Config::get('services.twilio');
+        //     if (!array($config)) {
+        //         throw new \Exception('Twilio: Invalid configuration.');
+        //     }
+        //     return new Twilio($config);
+        // });
 
-        // Register Twilio Test Call Command
-        $this->app['twilio.call'] = $this->app->share(function($app) {
-            return new Commands\TwilioCallCommand();
-        });
+        // // Register Twilio Test SMS Command
+        // $this->app['twilio.sms'] = $this->app->share(function($app) {
+        //     return new Commands\TwilioSmsCommand();
+        // });
 
-        $this->commands(
-            'twilio.sms',
-            'twilio.call'
-        );
+        // // Register Twilio Test Call Command
+        // $this->app['twilio.call'] = $this->app->share(function($app) {
+        //     return new Commands\TwilioCallCommand();
+        // });
+
+        // $this->commands(
+        //     'twilio.sms',
+        //     'twilio.call'
+        // );
 
 	}
 
