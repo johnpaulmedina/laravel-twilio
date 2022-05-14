@@ -1,6 +1,6 @@
 {
     "name": "johnpaulmedina/laravel-twilio",
-    "description": "Twilio API for Laravel 5.4",
+    "description": "Twilio API for Laravel 5.3",
     "type": "library",
     "keywords": ["sms","ivr","laravel5","twilio"],
     "authors": [
@@ -13,7 +13,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1.0",
-        "illuminate/support": "~5.4",
+        "illuminate/support": ">=5.3",
         "twilio/sdk": "^5.16"
     },
     "autoload": {
